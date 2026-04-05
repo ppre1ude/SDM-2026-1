@@ -17,6 +17,13 @@
         function classify() {
             const text = document.getElementById("text").value;
 
+            // [ISSUE#2] 빈 입력값 처리 로직 추가
+            if (!text || text.trim() === "") {
+                const result = document.getElementById("result");
+                result.innerText = "메시지를 입력해 주세요! 🛑";
+                return; // 서버 요청을 중단하고 함수 종료
+            }
+
             fetch("/classify", {
                 method: "POST",
                 body: JSON.stringify({text})
