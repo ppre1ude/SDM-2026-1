@@ -1,11 +1,9 @@
 name: Gemini Code Review
 
-# 권한 설정: PR에 댓글을 쓰기 위해 write 권한이 필요함
 permissions:
   contents: read
   pull-requests: write
 
-# PR이 열리거나, 새로운 코드가 push(synchronize)될 때 실행
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -18,16 +16,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Gemini Code Review
-        # Gemini를 지원하는 공식/검증된 액션 사용
-        uses: google-gemini/gemini-review-action@v1
+        uses: actions/checkout@v3
         with:
-          # GitHub 토큰 (자동 생성됨)
-          github_token: ${{ secrets.MY_SECRET_KEY }}
-          # 우리가 등록한 Gemini API 키
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
-          # 리뷰 언어 설정
           language: "Korean"
-          # 사용할 모델 (강의 자료의 gpt-3.5-turbo 대신 최신 gemini 사용)
-          model: "gemini-3.1-flash"
-          # 리뷰 범위 (PDF처럼 전체적인 개선 안내 포함)
+          model: "gemini-3.1-flash" # 혹은 사용 가능한 최신 모델명
           summary: "true"
